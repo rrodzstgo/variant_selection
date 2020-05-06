@@ -42,5 +42,10 @@ hc.norm = hclust(dist(tsne$Y))
 tsne_plot$hclust = factor(cutree(hc.norm, 26))
 hc.norm.cent = tsne_plot %>% group_by(hclust) %>% select(tsne1, tsne2) %>% summarize_all(mean)
 
+hclust_tsne_populations <- select(tsne_plot, Population, hclust) %>%  group_by(hclust) %>% count(Population)
+
+ggplot(hclust_tsne_populations) + geom_bar(aes(x=hclust,fill = Population)) + scale_color_manual(values=getPalette(colourCount))
+
+
 
 }
