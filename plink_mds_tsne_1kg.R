@@ -64,5 +64,4 @@ hclust_tsne_populations <- select(tsne_plot, Population, hclust) %>%  group_by(h
 ggplot(hclust_tsne_populations) + geom_bar(aes(x=hclust,fill = Population)) + scale_color_manual(values=getPalette(colourCount))
 
 
-
 }
