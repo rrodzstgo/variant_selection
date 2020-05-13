@@ -1,7 +1,7 @@
 #name the function as plink_mds_tsne 
 #converts plink mds into tsne plot and identifies the populations inside the clusters from the 26 populations in 1000 genomes.
 
-plink_mds_tsne <- function{mds_file){ 
+plink_mds_tsne <- function(mds_file){ 
 
 #load required libraries
 library (dplyr)
@@ -14,7 +14,7 @@ sample_info_1kg <- read.csv("/Volumes/Cerebro/dutil-qsc/databases/metadata_1kg_2
 colnames(sample_info_1kg)[1] <- "ID"
 
 #load the plink mds file and rename the first column as ID
-mds=read.csv("data/mega_ld06_maf05_plink.mds", sep="")
+mds=read.csv("mds_file", sep="")
 colnames(mds)[1]<-'ID'
 
 #load the order in which populations will be placed in the plots
