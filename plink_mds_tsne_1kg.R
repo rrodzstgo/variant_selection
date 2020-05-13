@@ -18,8 +18,8 @@ mds=read.csv("mds_file", sep="")
 colnames(mds)[1]<-'ID'
 
 #load the order in which populations will be placed in the plots
-labels <- read.table("/Volumes/Cerebro/dutil-qsc/manuals/pong/pop_order.txt", quote="\"", comment.char="")
-colnames(labels) <- "labels"
+labels <- c("YRI","LWK","GWD","MSL","ESN","ASW","ACB","CEU","TSI","FIN","GBR","IBS","GIH","PJL","BEB","STU","ITU","CHB","JPT","CHS","CDX","KHV","MXL","PUR","CLM","PEL")
+
 
 #merge the ID, population abbreviation and long name with the mds information
 sample_info_1kg <- select(sample_info_1kg, ID, Population, Population.Description)
@@ -38,6 +38,33 @@ tsne_plot=cbind(tsne_plot, mds[,c(1:3,104)])
 population_legend <- c("YRI","LWK","GWD","MSL","ESN","ASW","ACB","CEU","TSI","FIN","GBR","IBS","GIH","PJL","BEB","STU","ITU","CHB","JPT","CHS","CDX","KHV","MXL","PUR","CLM","PEL")
 tsne_plot$Population <- factor(tsne_plot$Population, levels = population_legend)
 
+#establish populations by continents
+tsne_plot$Population_continents[tsne_plot$Population=="YRI"] <- 'AFR'
+tsne_plot$Population_continents[tsne_plot$Population=="LWK"] <- 'AFR'
+tsne_plot$Population_continents[tsne_plot$Population=="GWD"] <- 'AFR'
+tsne_plot$Population_continents[tsne_plot$Population=="MSL"] <- 'AFR'
+tsne_plot$Population_continents[tsne_plot$Population=="ESN"] <- 'AFR'
+tsne_plot$Population_continents[tsne_plot$Population=="ASW"] <- 'AA'
+tsne_plot$Population_continents[tsne_plot$Population=="ASB"] <- 'AA'
+tsne_plot$Population_continents[tsne_plot$Population=="CEU"] <- 'EUR'
+tsne_plot$Population_continents[tsne_plot$Population=="TSI"] <- 'EUR'
+tsne_plot$Population_continents[tsne_plot$Population=="FIN"] <- 'EUR'
+tsne_plot$Population_continents[tsne_plot$Population=="GBR"] <- 'EUR'
+tsne_plot$Population_continents[tsne_plot$Population=="IBS"] <- 'EUR'
+tsne_plot$Population_continents[tsne_plot$Population=="GIH"] <- 'SAS'
+tsne_plot$Population_continents[tsne_plot$Population=="PJL"] <- 'SAS'
+tsne_plot$Population_continents[tsne_plot$Population=="BEB"] <- 'SAS'
+tsne_plot$Population_continents[tsne_plot$Population=="STU"] <- 'SAS'
+tsne_plot$Population_continents[tsne_plot$Population=="ITU"] <- 'SAS'
+tsne_plot$Population_continents[tsne_plot$Population=="CHB"] <- 'EAS'
+tsne_plot$Population_continents[tsne_plot$Population=="JPT"] <- 'EAS'
+tsne_plot$Population_continents[tsne_plot$Population=="CHS"] <- 'EAS'
+tsne_plot$Population_continents[tsne_plot$Population=="CDX"] <- 'EAS'
+tsne_plot$Population_continents[tsne_plot$Population=="KHV"] <- 'EAS'
+tsne_plot$Population_continents[tsne_plot$Population=="MXL"] <- 'H/L'
+tsne_plot$Population_continents[tsne_plot$Population=="PUR"] <- 'H/L'
+tsne_plot$Population_continents[tsne_plot$Population=="CLM"] <- 'H/L'
+tsne_plot$Population_continents[tsne_plot$Population=="PEL"] <- 'H/L'
 #extract the first two dimensions of the tsne
 colnames(tsne_plot)[1]<-'tsne1'
 colnames(tsne_plot)[2]<-'tsne2'
