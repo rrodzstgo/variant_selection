@@ -14,7 +14,7 @@ sample_info_1kg <- read.csv("metadata_1kg_20130606_sample_info.csv")
 colnames(sample_info_1kg)[1] <- "ID"
 
 #load the plink mds file and rename the first column as ID
-mds=read.csv("mds_file", sep="")
+mds=read.csv(mds_file, sep="")
 colnames(mds)[1]<-'ID'
 
 #load the order in which populations will be placed in the plots
@@ -84,11 +84,10 @@ hc.norm = hclust(dist(tsne$Y))
 tsne_plot$hclust = factor(cutree(hc.norm, 26))
 hc.norm.cent = tsne_plot %>% group_by(hclust) %>% select(tsne1, tsne2) %>% summarize_all(mean)
 
-#summarize counts of population per cluster
-hclust_tsne_populations <- select(tsne_plot, Population, hclust) %>%  group_by(hclust) %>% count(Population)
 
 #plot the population numbers by clusters in a bar plot
-ggplot(hclust_tsne_populations) + geom_bar(aes(x=hclust,fill = Population)) + scale_color_manual(values=getPalette(colourCount))
+ggplot(tsne_plot) + geom_bar(aes(x=hclust,fill = Population)) + scale_color_manual(values=getPalette(colourCount))
 
+ggplot(tsne_plot) + geom_bar(aes(x=hclust,fill = Population_continents)) + scale_color_manual(values=getPalette(colourCount))
 
 }
