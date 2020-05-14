@@ -10,7 +10,7 @@ require (ggplot2)
 require(RColorBrewer)
 
 #load the 1000 Genomes sample information file and rename the first column as ID
-sample_info_1kg <- read.csv("/Volumes/Cerebro/dutil-qsc/databases/metadata_1kg_20130606_sample_info.csv")
+sample_info_1kg <- read.csv("metadata_1kg_20130606_sample_info.csv")
 colnames(sample_info_1kg)[1] <- "ID"
 
 #load the plink mds file and rename the first column as ID
