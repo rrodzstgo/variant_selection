@@ -86,8 +86,8 @@ hc.norm.cent = tsne_plot %>% group_by(hclust) %>% select(tsne1, tsne2) %>% summa
 
 
 #plot the population numbers by clusters in a bar plot
-ggplot(tsne_plot) + geom_bar(aes(x=hclust,fill = Population)) + scale_color_manual(values=getPalette(colourCount))
+ggplot(tsne_plot,aes(x=hclust,fill = Population)) + geom_bar(color = "black") + scale_color_manual(values=getPalette(colourCount))
 
-ggplot(tsne_plot) + geom_bar(aes(x=hclust,fill = Population_continents)) + scale_color_manual(values=getPalette(colourCount))
+ggplot(tsne_plot,aes(x=hclust,fill = Population_continents)) + geom_bar(color = "black") + scale_color_manual(values=getPalette(colourCount))
 
 }
