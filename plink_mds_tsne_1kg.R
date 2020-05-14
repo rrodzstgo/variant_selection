@@ -4,10 +4,10 @@
 plink_mds_tsne <- function(mds_file){ 
 
 #load required libraries
-library (dplyr)
-library (Rtsne)
-library (ggplot2)
-library(RColorBrewer)
+require (dplyr)
+require (Rtsne)
+require (ggplot2)
+require(RColorBrewer)
 
 #load the 1000 Genomes sample information file and rename the first column as ID
 sample_info_1kg <- read.csv("/Volumes/Cerebro/dutil-qsc/databases/metadata_1kg_20130606_sample_info.csv")
