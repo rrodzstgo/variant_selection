@@ -1,7 +1,7 @@
 #name the function as plink_mds_tsne 
 #converts plink mds into tsne plot and identifies the populations inside the clusters from the 26 populations in 1000 genomes.
 
-plink_mds_tsne <- function(mds_file,tsne_title,clusters_title,plot_save_pattern,format,dpi){ 
+plink_mds_tsne <- function(mds,tsne_title,clusters_title,plot_save_pattern,format,dpi){ 
 
 #load required libraries
 require (dplyr)
@@ -9,22 +9,21 @@ require (Rtsne)
 require (ggplot2)
 require(RColorBrewer)
 
-ifelse(is.na(tsne_title) == NA,"t-SNE Plot",tsne_title)
+ifelse(missing(tsne_title) == TRUE,"t-SNE Plot",tsne_title)
 
-ifelse(is.na(clusters_title) == NA,"Clusters Plot Populations",clusters_title)
+ifelse(missing(clusters_title) == TRUE,"Clusters Plot Populations",clusters_title)
 
-ifelse(is.na(plot_save_pattern) == NA,"sample",plot_save_pattern)
+ifelse(missing(plot_save_pattern) == TRUE,"sample",plot_save_pattern)
 
-ifelse(is.na(format) == NA,tiff,format)
+ifelse(missing(format) == TRUE,tiff,format)
 
-ifelse(is.na(dpi) == NA,300,dpi)
+ifelse(missing(dpi) == TRUE,300,dpi)
 
 #load the 1000 Genomes sample information file and rename the first column as ID
 sample_info_1kg <- read.csv("metadata_1kg_20130606_sample_info.csv")
 colnames(sample_info_1kg)[1] <- "ID"
 
 #load the plink mds file and rename the first column as ID
-mds=read.csv(mds_file, sep="")
 colnames(mds)[1]<-'ID'
 
 #load the order in which populations will be placed in the plots
