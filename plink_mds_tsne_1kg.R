@@ -1,7 +1,7 @@
 #name the function as plink_mds_tsne 
 #converts plink mds into tsne plot and identifies the populations inside the clusters from the 26 populations in 1000 genomes.
 
-plink_mds_tsne <- function(mds,tsne_title =NULL,clusters_title = NULL,plot_save_pattern=NULL,format="tiff",dpi=300){ 
+plink_mds_tsne <- function(mds,tsne_title =NULL,clusters_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){ 
 
 #load required libraries
 require (dplyr)
@@ -9,10 +9,12 @@ require (Rtsne)
 require (ggplot2)
 require(RColorBrewer)
 
-ifelse(is.null(tsne_title) == TRUE,"t-SNE Plot",tsne_title)
-ifelse(is.null(clusters_title) == TRUE,"Clusters Plot Populations",clusters_title)
-ifelse(is.null(plot_save_pattern) == TRUE,"",plot_save_pattern)
-
+#plot default settings
+tsne_title <- ifelse(is.null(tsne_title) == TRUE,"t-SNE Plot",tsne_title)
+clusters_title <- ifelse(is.null(clusters_title) == TRUE,"Clusters Plot Populations",clusters_title)
+plot_save_pattern <- ifelse(is.null(plot_save_pattern) == TRUE,"plink",plot_save_pattern)
+dpi <- ifelse(is.null(dpi) == TRUE,300,dpi)
+format <- ifelse(is.null(format) == TRUE,"tiff",format)
 
 #load the 1000 Genomes sample information file and rename the first column as ID
 sample_info_1kg <- read.csv("metadata_1kg_20130606_sample_info.csv")
