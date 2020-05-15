@@ -10,9 +10,7 @@ require (ggplot2)
 require(RColorBrewer)
 
 ifelse(is.null(tsne_title) == TRUE,"t-SNE Plot",tsne_title)
-
 ifelse(is.null(clusters_title) == TRUE,"Clusters Plot Populations",clusters_title)
-
 ifelse(is.null(plot_save_pattern) == TRUE,"",plot_save_pattern)
 
 
@@ -73,6 +71,7 @@ tsne_plot$Population_continents[tsne_plot$Population=="MXL"] <- 'H/L'
 tsne_plot$Population_continents[tsne_plot$Population=="PUR"] <- 'H/L'
 tsne_plot$Population_continents[tsne_plot$Population=="CLM"] <- 'H/L'
 tsne_plot$Population_continents[tsne_plot$Population=="PEL"] <- 'H/L'
+
 #extract the first two dimensions of the tsne
 colnames(tsne_plot)[1]<-'tsne1'
 colnames(tsne_plot)[2]<-'tsne2'
