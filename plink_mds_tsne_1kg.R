@@ -1,13 +1,17 @@
 #name the function as plink_mds_tsne 
 #converts plink mds into tsne plot and identifies the populations inside the clusters from the 26 populations in 1000 genomes.
 
-plink_mds_tsne <- function(mds_file){ 
+plink_mds_tsne <- function(mds_file,tsne_title,clusters_title){ 
 
 #load required libraries
 require (dplyr)
 require (Rtsne)
 require (ggplot2)
 require(RColorBrewer)
+
+ifelse(is.na(tsne_title) == NA,"t-SNE Plot",tsne_title)
+
+ifelse(is.na(clusters_title) == NA,"Clusters Plot",clusters_title)
 
 #load the 1000 Genomes sample information file and rename the first column as ID
 sample_info_1kg <- read.csv("metadata_1kg_20130606_sample_info.csv")
@@ -45,7 +49,7 @@ tsne_plot$Population_continents[tsne_plot$Population=="GWD"] <- 'AFR'
 tsne_plot$Population_continents[tsne_plot$Population=="MSL"] <- 'AFR'
 tsne_plot$Population_continents[tsne_plot$Population=="ESN"] <- 'AFR'
 tsne_plot$Population_continents[tsne_plot$Population=="ASW"] <- 'AA'
-tsne_plot$Population_continents[tsne_plot$Population=="ASB"] <- 'AA'
+tsne_plot$Population_continents[tsne_plot$Population=="ACB"] <- 'AA'
 tsne_plot$Population_continents[tsne_plot$Population=="CEU"] <- 'EUR'
 tsne_plot$Population_continents[tsne_plot$Population=="TSI"] <- 'EUR'
 tsne_plot$Population_continents[tsne_plot$Population=="FIN"] <- 'EUR'
@@ -75,7 +79,7 @@ getPalette = colorRampPalette(brewer.pal(8, "Accent"))
 
 #plot the tsne analysis and save it
 ggplot(tsne_plot, aes(x = tsne1, y=tsne2, color=Population))+ 
-  geom_point(alpha = 0.8) + theme_bw() + ggtitle("MEGA Linkage 06") + scale_color_manual(values=getPalette(colourCount))
+  geom_point(alpha = 0.8) + theme_bw() + ggtitle(tsne_title) + scale_color_manual(values=getPalette(colourCount))
 
 ggsave(filename = 'mds_tsne.tiff',device = "tiff",dpi = 300)
 
@@ -86,8 +90,10 @@ hc.norm.cent = tsne_plot %>% group_by(hclust) %>% select(tsne1, tsne2) %>% summa
 
 
 #plot the population numbers by clusters in a bar plot
-ggplot(tsne_plot,aes(x=hclust,fill = Population)) + geom_bar(color = "black") + scale_color_manual(values=getPalette(colourCount))
+ggplot(tsne_plot,aes(x=hclust,fill = Population)) + geom_bar(color = "black") +
+  scale_color_manual(values=getPalette(colourCount)) + ggtitle(clusters_title)
 
-ggplot(tsne_plot,aes(x=hclust,fill = Population_continents)) + geom_bar(color = "black") + scale_color_manual(values=getPalette(colourCount))
+ggplot(tsne_plot,aes(x=hclust,fill = Population_continents)) + geom_bar(color = "black") + 
+  scale_color_manual(values=getPalette(colourCount)) + ggtitle(clusters_title)
 
 }
