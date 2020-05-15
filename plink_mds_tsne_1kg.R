@@ -1,7 +1,7 @@
 #name the function as plink_mds_tsne 
 #converts plink mds into tsne plot and identifies the populations inside the clusters from the 26 populations in 1000 genomes.
 
-plink_mds_tsne <- function(mds_file,tsne_title,clusters_title){ 
+plink_mds_tsne <- function(mds_file,tsne_title,clusters_title,plot_save_pattern,format,dpi){ 
 
 #load required libraries
 require (dplyr)
@@ -11,7 +11,13 @@ require(RColorBrewer)
 
 ifelse(is.na(tsne_title) == NA,"t-SNE Plot",tsne_title)
 
-ifelse(is.na(clusters_title) == NA,"Clusters Plot",clusters_title)
+ifelse(is.na(clusters_title) == NA,"Clusters Plot Populations",clusters_title)
+
+ifelse(is.na(plot_save_pattern) == NA,"sample",plot_save_pattern)
+
+ifelse(is.na(format) == NA,tiff,format)
+
+ifelse(is.na(dpi) == NA,300,dpi)
 
 #load the 1000 Genomes sample information file and rename the first column as ID
 sample_info_1kg <- read.csv("metadata_1kg_20130606_sample_info.csv")
@@ -79,9 +85,9 @@ getPalette = colorRampPalette(brewer.pal(8, "Accent"))
 
 #plot the tsne analysis and save it
 ggplot(tsne_plot, aes(x = tsne1, y=tsne2, color=Population))+ 
-  geom_point(alpha = 0.8) + theme_bw() + ggtitle(tsne_title) + scale_color_manual(values=getPalette(colourCount))
+  geom_point(alpha = 0.8) + theme_bw() + ggtitle(as.character(tsne_title)) + scale_color_manual(values=getPalette(colourCount))
 
-ggsave(filename = 'mds_tsne.tiff',device = "tiff",dpi = 300)
+ggsave(filename =  paste(plot_save_pattern+'mds_tsne.'+format),device = as.character(format),dpi = dpi)
 
 #establish 26 clusters in the tsne data
 hc.norm = hclust(dist(tsne$Y))
@@ -89,11 +95,15 @@ tsne_plot$hclust = factor(cutree(hc.norm, 26))
 hc.norm.cent = tsne_plot %>% group_by(hclust) %>% select(tsne1, tsne2) %>% summarize_all(mean)
 
 
+
 #plot the population numbers by clusters in a bar plot
 ggplot(tsne_plot,aes(x=hclust,fill = Population)) + geom_bar(color = "black") +
-  scale_color_manual(values=getPalette(colourCount)) + ggtitle(clusters_title)
+  scale_color_manual(values=getPalette(colourCount)) + ggtitle(as.character(clusters_title))
+
+ggsave(filename = paste(plot_save_pattern+'tsne_clusters_pop.'+format),device = as.character(format),dpi = dpi)
 
 ggplot(tsne_plot,aes(x=hclust,fill = Population_continents)) + geom_bar(color = "black") + 
-  scale_color_manual(values=getPalette(colourCount)) + ggtitle(clusters_title)
+  scale_color_manual(values=getPalette(colourCount)) + ggtitle(as.character(clusters_title))
 
+ggsave(filename =  paste(plot_save_pattern+'tsne_clusters_cont_pop.'+format),device = as.character(format),dpi = dpi)
 }
