@@ -94,14 +94,13 @@ hc.norm = hclust(dist(tsne$Y))
 tsne_plot$hclust = factor(cutree(hc.norm, 26))
 hc.norm.cent = tsne_plot %>% group_by(hclust) %>% select(tsne1, tsne2) %>% summarize_all(mean)
 
-
-
 #plot the population numbers by clusters in a bar plot
 ggplot(tsne_plot,aes(x=hclust,fill = Population)) + geom_bar(color = "black") +
   scale_color_manual(values=getPalette(colourCount)) + ggtitle(as.character(clusters_title))
 
 ggsave(filename = paste(plot_save_pattern+'tsne_clusters_pop.'+format),device = as.character(format),dpi = dpi)
 
+#plot the population by continent by cluster
 ggplot(tsne_plot,aes(x=hclust,fill = Population_continents)) + geom_bar(color = "black") + 
   scale_color_manual(values=getPalette(colourCount)) + ggtitle(as.character(clusters_title))
 
