@@ -1,7 +1,8 @@
 #name the function as plink_mds_tsne 
 #converts plink mds into tsne plot and identifies the populations inside the clusters from the 26 populations in 1000 genomes.
 
-plink_mds_tsne <- function(mds,tsne_title =NULL,clusters_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){ 
+plink_mds_tsne <- function(mds,tsne_title =NULL,clusters_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL,tsne_duplicates=NULL,plot_pca=NULL,
+                           tsne_perplexity=NULL,tsne_theta=NULL,tsne_dims=NULL){ 
 
 #load required libraries
 require (dplyr)
@@ -15,6 +16,13 @@ clusters_title <- ifelse(is.null(clusters_title) == TRUE,"Clusters Plot Populati
 plot_save_pattern <- ifelse(is.null(plot_save_pattern) == TRUE,"plink",plot_save_pattern)
 dpi <- ifelse(is.null(dpi) == TRUE,300,dpi)
 format <- ifelse(is.null(format) == TRUE,"tiff",format)
+
+#tsne default settings
+check_duplicates <- ifelse(is.null(tsne_duplicates) == TRUE,FALSE,tsne_duplicates)
+pca <-  ifelse(is.null(plot_pca) == TRUE,FALSE,plot_pca)
+perplexity <- ifelse(is.null(tsne_perplexity) == TRUE,30,tsne_perplexity)
+theta <- ifelse(is.null(tsne_theta) == TRUE,0.5,tsne_theta)
+dims <- ifelse(is.null(tsne_dims) == TRUE,2,tsne_dims)
 
 #load the 1000 Genomes sample information file and rename the first column as ID
 sample_info_1kg <- read.csv("metadata_1kg_20130606_sample_info.csv")
