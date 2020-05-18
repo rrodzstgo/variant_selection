@@ -1,8 +1,9 @@
 #name the function as plink_mds_tsne 
 #converts plink mds into tsne plot and identifies the populations inside the clusters from the 26 populations in 1000 genomes.
 
-plink_mds_tsne <- function(mds,tsne_title =NULL,clusters_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL,tsne_duplicates=NULL,plot_pca=NULL,
-                           tsne_perplexity=NULL,tsne_theta=NULL,tsne_dims=NULL){ 
+plink_mds_tsne <- function(mds,tsne_title =NULL,clusters_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL,
+                           tsne_duplicates=NULL,tsne_pca=NULL,tsne_perplexity=NULL,tsne_theta=NULL,
+                           tsne_dims=NULL){ 
 
 #load required libraries
 require (dplyr)
@@ -18,11 +19,11 @@ dpi <- ifelse(is.null(dpi) == TRUE,300,dpi)
 format <- ifelse(is.null(format) == TRUE,"tiff",format)
 
 #tsne default settings
-check_duplicates <- ifelse(is.null(tsne_duplicates) == TRUE,FALSE,tsne_duplicates)
-pca <-  ifelse(is.null(plot_pca) == TRUE,FALSE,plot_pca)
-perplexity <- ifelse(is.null(tsne_perplexity) == TRUE,30,tsne_perplexity)
-theta <- ifelse(is.null(tsne_theta) == TRUE,0.5,tsne_theta)
-dims <- ifelse(is.null(tsne_dims) == TRUE,2,tsne_dims)
+tsne_duplicates <- ifelse(is.null(tsne_duplicates) == TRUE,FALSE,tsne_duplicates)
+tsne_pca <-  ifelse(is.null(tsne_pca) == TRUE,FALSE,tsne_pca)
+tsne_perplexity <- ifelse(is.null(tsne_perplexity) == TRUE,30,tsne_perplexity)
+tsne_theta <- ifelse(is.null(tsne_theta) == TRUE,0.5,tsne_theta)
+tsne_dims <- ifelse(is.null(tsne_dims) == TRUE,2,tsne_dims)
 
 #load the 1000 Genomes sample information file and rename the first column as ID
 sample_info_1kg <- read.csv("metadata_1kg_20130606_sample_info.csv")
@@ -45,7 +46,7 @@ mds=left_join(mds,sample_info_1kg, by='ID')
 tsne_data=as.matrix(mds[4:103])
 
 #run tsne analysis on the mds data that was extracted
-tsne <- Rtsne(tsne_data, check_duplicates = FALSE, pca = FALSE, perplexity=30, theta=0.5, dims=2)
+tsne <- Rtsne(tsne_data, check_duplicates = tsne_duplicates, pca = tsne_pca, perplexity=tsne_perplexity, theta=tsne_theta, dims=tsne_dims)
 
 tsne_plot=as.data.frame(tsne$Y)
 tsne_plot=cbind(tsne_plot, mds[,c(1:3,104)])
