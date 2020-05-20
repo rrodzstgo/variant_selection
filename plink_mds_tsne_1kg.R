@@ -1,5 +1,7 @@
 #name the function as plink_mds_tsne 
 #converts plink mds into tsne plot and identifies the populations inside the clusters from the 26 populations in 1000 genomes.
+#only obligaotry input is the mds plink file, all other parameters have default values and are optional to change
+#default values are on lines 15 through the 27
 
 plink_mds_tsne <- function(mds,tsne_title =NULL,clusters_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL,
                            tsne_duplicates=NULL,tsne_pca=NULL,tsne_perplexity=NULL,tsne_theta=NULL,
