@@ -14,10 +14,10 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   k <- 8
   
   #plot default settings
-  plot_title <- "test"
-  plot_save_pattern <- "test"
-  dpi <-  300
-  format <- "tiff"
+  plot_title <- ifelse(is.null(plot_title) == TRUE,"test",plot_title)
+  plot_save_pattern <- ifelse(is.null(plot_save_pattern) == TRUE,"test",plot_save_pattern)
+  dpi <-  ifelse(is.null(dpi) == TRUE,300,dpi)
+  format <- ifelse(is.null(format) == TRUE,"tiff",format)
   
   #load the 1000 Genomes sample information file and rename the first column as ID
   sample_info_1kg <- read.csv("1kG_labels.txt")
@@ -105,16 +105,17 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
         geom_boxplot() + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1)
       geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1) 
       
-      ggsave(filename =  paste(plot_save_pattern,"_",columns,"_bias_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi))
+      ggsave(filename =  paste(plot_save_pattern,"_",columns,"_bias_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi),width = 12)
     } 
   }
   
   for (columns in colnames(se_matrix)[1:k]){
     for (population_columns in colnames(se_matrix)[9:10]){
       ggplot(se_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-        geom_boxplot() + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(se_matrix$columns), color = "red", size=1) 
+        geom_boxplot() + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(columns), color = "red", size=1) 
       
       
       ggsave(filename =  paste(plot_save_pattern,"_",columns,"_se_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
     } 
   }
+}
