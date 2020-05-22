@@ -4,12 +4,12 @@
 
 admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){
   
-#required packages
+  #required packages
   require (dplyr)
   require (ggplot2)
   require(RColorBrewer)
 
-#plot default settings
+  #plot default settings
   plot_title <- ifelse(is.null(plot_title) == TRUE,"ADMIXTURE",clusters_title)
   plot_save_pattern <- ifelse(is.null(plot_save_pattern) == TRUE,"admixture",plot_save_pattern)
   dpi <- ifelse(is.null(dpi) == TRUE,300,dpi)
@@ -68,10 +68,10 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   getPalette = colorRampPalette(brewer.pal(8, "Accent"))
   
   #plot the bias_matrix and save it
-  for (k in k)
+  for (k in k){
   ggplot(bias_matrix, aes(x = population, y=tsne2, color=population))+ 
     geom_point(alpha = 0.8) + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount))
   
   ggsave(filename =  paste(plot_save_pattern,k,'bias_matrix',format,sep = ""), device = format ,dpi = as.numeric(dpi))
-  
+  }
 }
