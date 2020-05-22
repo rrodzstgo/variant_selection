@@ -102,7 +102,7 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   for (columns in colnames(bias_matrix)[1:k]){
     for (population_columns in colnames(bias_matrix)[9:10]){
       ggplot(bias_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-        geom_boxplot() + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1)
+        geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1)
       geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1) 
       
       ggsave(filename =  paste(plot_save_pattern,"_",columns,"_bias_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi),width = 12)
@@ -112,7 +112,7 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   for (columns in colnames(se_matrix)[1:k]){
     for (population_columns in colnames(se_matrix)[9:10]){
       ggplot(se_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-        geom_boxplot() + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(columns), color = "red", size=1) 
+        geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(columns), color = "red", size=1) 
       
       
       ggsave(filename =  paste(plot_save_pattern,"_",columns,"_se_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
