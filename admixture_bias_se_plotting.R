@@ -2,7 +2,7 @@
 #the bias and standard error files must be supplied
 
 
-admixture_bias_se_plotting <- function(bias_matrix,se_matrix,plot_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){
+admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){
   
 #required packages
   require (dplyr)
@@ -29,61 +29,36 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,plot_title = NULL,p
   
   #add continental population column to the bias and standard error matrices
   
-  #establish populations by continents to the bias matrix 
-  bias_matrix$population_continents[bias_matrix$population=="YRI"] <- 'AFR'
-  bias_matrix$population_continents[bias_matrix$population=="LWK"] <- 'AFR'
-  bias_matrix$population_continents[bias_matrix$population=="GWD"] <- 'AFR'
-  bias_matrix$population_continents[bias_matrix$population=="MSL"] <- 'AFR'
-  bias_matrix$population_continents[bias_matrix$population=="ESN"] <- 'AFR'
-  bias_matrix$population_continents[bias_matrix$population=="ASW"] <- 'AA'
-  bias_matrix$population_continents[bias_matrix$population=="ACB"] <- 'AA'
-  bias_matrix$population_continents[bias_matrix$population=="CEU"] <- 'EUR'
-  bias_matrix$population_continents[bias_matrix$population=="TSI"] <- 'EUR'
-  bias_matrix$population_continents[bias_matrix$population=="FIN"] <- 'EUR'
-  bias_matrix$population_continents[bias_matrix$population=="GBR"] <- 'EUR'
-  bias_matrix$population_continents[bias_matrix$population=="IBS"] <- 'EUR'
-  bias_matrix$population_continents[bias_matrix$population=="GIH"] <- 'SAS'
-  bias_matrix$population_continents[bias_matrix$population=="PJL"] <- 'SAS'
-  bias_matrix$population_continents[bias_matrix$population=="BEB"] <- 'SAS'
-  bias_matrix$population_continents[bias_matrix$population=="STU"] <- 'SAS'
-  bias_matrix$population_continents[bias_matrix$population=="ITU"] <- 'SAS'
-  bias_matrix$population_continents[bias_matrix$population=="CHB"] <- 'EAS'
-  bias_matrix$population_continents[bias_matrix$population=="JPT"] <- 'EAS'
-  bias_matrix$population_continents[bias_matrix$population=="CHS"] <- 'EAS'
-  bias_matrix$population_continents[bias_matrix$population=="CDX"] <- 'EAS'
-  bias_matrix$population_continents[bias_matrix$population=="KHV"] <- 'EAS'
-  bias_matrix$population_continents[bias_matrix$population=="MXL"] <- 'H/L'
-  bias_matrix$population_continents[bias_matrix$population=="PUR"] <- 'H/L'
-  bias_matrix$population_continents[bias_matrix$population=="CLM"] <- 'H/L'
-  bias_matrix$population_continents[bias_matrix$population=="PEL"] <- 'H/L'
+  data_input_matrixes <- c("bias_matrix","se_matrix")
   
-  #establish populations by continents to the standard error matrix
-  se_matrix$population_continents[se_matrix$population=="YRI"] <- 'AFR'
-  se_matrix$population_continents[se_matrix$population=="LWK"] <- 'AFR'
-  se_matrix$population_continents[se_matrix$population=="GWD"] <- 'AFR'
-  se_matrix$population_continents[se_matrix$population=="MSL"] <- 'AFR'
-  se_matrix$population_continents[se_matrix$population=="ESN"] <- 'AFR'
-  se_matrix$population_continents[se_matrix$population=="ASW"] <- 'AA'
-  se_matrix$population_continents[se_matrix$population=="ACB"] <- 'AA'
-  se_matrix$population_continents[se_matrix$population=="CEU"] <- 'EUR'
-  se_matrix$population_continents[se_matrix$population=="TSI"] <- 'EUR'
-  se_matrix$population_continents[se_matrix$population=="FIN"] <- 'EUR'
-  se_matrix$population_continents[se_matrix$population=="GBR"] <- 'EUR'
-  se_matrix$population_continents[se_matrix$population=="IBS"] <- 'EUR'
-  se_matrix$population_continents[se_matrix$population=="GIH"] <- 'SAS'
-  se_matrix$population_continents[se_matrix$population=="PJL"] <- 'SAS'
-  se_matrix$population_continents[se_matrix$population=="BEB"] <- 'SAS'
-  se_matrix$population_continents[se_matrix$population=="STU"] <- 'SAS'
-  se_matrix$population_continents[se_matrix$population=="ITU"] <- 'SAS'
-  se_matrix$population_continents[se_matrix$population=="CHB"] <- 'EAS'
-  se_matrix$population_continents[se_matrix$population=="JPT"] <- 'EAS'
-  se_matrix$population_continents[se_matrix$population=="CHS"] <- 'EAS'
-  se_matrix$population_continents[se_matrix$population=="CDX"] <- 'EAS'
-  se_matrix$population_continents[se_matrix$population=="KHV"] <- 'EAS'
-  se_matrix$population_continents[se_matrix$population=="MXL"] <- 'H/L'
-  se_matrix$population_continents[se_matrix$population=="PUR"] <- 'H/L'
-  se_matrix$population_continents[se_matrix$population=="CLM"] <- 'H/L'
-  se_matrix$population_continents[se_matrix$population=="PEL"] <- 'H/L'
+  for(matrix in data_input_matrixes){
+    matrix$population_continents[matrix$population=="YRI"] <- 'AFR'
+    matrix$population_continents[matrix$population=="LWK"] <- 'AFR'
+    matrix$population_continents[matrix$population=="GWD"] <- 'AFR'
+    matrix$population_continents[matrix$population=="MSL"] <- 'AFR'
+    matrix$population_continents[matrix$population=="ESN"] <- 'AFR'
+    matrix$population_continents[matrix$population=="ASW"] <- 'AA'
+    matrix$population_continents[matrix$population=="ACB"] <- 'AA'
+    matrix$population_continents[matrix$population=="CEU"] <- 'EUR'
+    matrix$population_continents[matrix$population=="TSI"] <- 'EUR'
+    matrix$population_continents[matrix$population=="FIN"] <- 'EUR'
+    matrix$population_continents[matrix$population=="GBR"] <- 'EUR'
+    matrix$population_continents[matrix$population=="IBS"] <- 'EUR'
+    matrix$population_continents[matrix$population=="GIH"] <- 'SAS'
+    matrix$population_continents[matrix$population=="PJL"] <- 'SAS'
+    matrix$population_continents[matrix$population=="BEB"] <- 'SAS'
+    matrix$population_continents[matrix$population=="STU"] <- 'SAS'
+    matrix$population_continents[matrix$population=="ITU"] <- 'SAS'
+    matrix$population_continents[matrix$population=="CHB"] <- 'EAS'
+    matrix$population_continents[matrix$population=="JPT"] <- 'EAS'
+    matrix$population_continents[matrix$population=="CHS"] <- 'EAS'
+    matrix$population_continents[matrix$population=="CDX"] <- 'EAS'
+    matrix$population_continents[matrix$population=="KHV"] <- 'EAS'
+    matrix$population_continents[matrix$population=="MXL"] <- 'H/L'
+    matrix$population_continents[matrix$population=="PUR"] <- 'H/L'
+    matrix$population_continents[matrix$population=="CLM"] <- 'H/L'
+    matrix$population_continents[matrix$population=="PEL"] <- 'H/L'
+  }
   
   #load the order in which populations will be placed in the plots
   labels <- c("YRI","LWK","GWD","MSL","ESN","ASW","ACB","CEU","TSI","FIN","GBR","IBS","GIH","PJL","BEB","STU","ITU","CHB","JPT","CHS","CDX","KHV","MXL","PUR","CLM","PEL")
