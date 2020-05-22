@@ -1,5 +1,5 @@
 #plot the bias and standard error files output files from ADMIXTURE using the 1000 Genomes as reference
-#either bias and standard error or both files must be supplied
+#the bias and standard error files must be supplied
 
 
 admixture_bias_se_plotting <- function(bias_matrix,se_matrix,plot_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){
@@ -88,5 +88,15 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,plot_title = NULL,p
   #load the order in which populations will be placed in the plots
   labels <- c("YRI","LWK","GWD","MSL","ESN","ASW","ACB","CEU","TSI","FIN","GBR","IBS","GIH","PJL","BEB","STU","ITU","CHB","JPT","CHS","CDX","KHV","MXL","PUR","CLM","PEL")
   
+  #expand color palette to fit all the populations 
+  colourCount = length(unique(bias_matrix$population))
+  getPalette = colorRampPalette(brewer.pal(8, "Accent"))
+  
+  #plot the bias_matrix and save it
+  for (k in k)
+  ggplot(bias_matrix, aes(x = population, y=tsne2, color=population))+ 
+    geom_point(alpha = 0.8) + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount))
+  
+  ggsave(filename =  paste(plot_save_pattern,k,'bias_matrix',format,sep = ""), device = format ,dpi = as.numeric(dpi))
   
 }
