@@ -93,12 +93,8 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   colourCount <- length(unique(bias_matrix$population))
   getPalette <- colorRampPalette(brewer.pal(8, "Accent"))
   
-  #plot the bias_matrix and save it
-  
-  population_matrix_data <- c("population","population_continents")
-  
-  
-  
+  #plot the bias_matrix and save
+ 
   for (columns in colnames(bias_matrix)[1:k]){
     for (population_columns in colnames(bias_matrix)[9:10]){
       ggplot(bias_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
@@ -108,6 +104,8 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
       ggsave(filename =  paste(plot_save_pattern,"_",columns,"_bias_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi),width = 12)
     } 
   }
+  
+  #plot the standard error matrix data and save
   
   for (columns in colnames(se_matrix)[1:k]){
     for (population_columns in colnames(se_matrix)[9:10]){
