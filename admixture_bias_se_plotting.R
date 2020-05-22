@@ -1,17 +1,12 @@
 #plot the bias and standard error files output files from ADMIXTURE using the 1000 Genomes as reference
 #the bias and standard error files must be supplied
 
-
 admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){
 
   #required packages
   require (dplyr)
   require (ggplot2)
   require(RColorBrewer)
-  
-  bias_matrix <- read.table("/shire/ronald/projects/gwas_1kg_targets/foundationone/ld02_maf05/foundationone_1kg_merged_ld02_maf05.8.Q_bias", quote="\"", comment.char="")
-  se_matrix <- foundationone_1kg_merged_ld02_maf05.8 <- read.table("/shire/ronald/projects/gwas_1kg_targets/foundationone/ld02_maf05/foundationone_1kg_merged_ld02_maf05.8.Q_se", quote="\"", comment.char="")
-  k <- 8
   
   #plot default settings
   plot_title <- ifelse(is.null(plot_title) == TRUE,"test",plot_title)
