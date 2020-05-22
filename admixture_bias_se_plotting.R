@@ -97,10 +97,11 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   data_input_matrixes <- c(se_matrix,bias_matrix)
   
   
-  for (columns in colnames(bias_matrix)){
-    for (population_columns in population_matrix_data[1:k]){
-      ggplot(bias_matrix, aes(x = columns, color=population_columns))+ 
-        geom_dotplot() + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount))
+  for (columns in colnames(bias_matrix)[1:k]){
+    for (population_columns in colnames(bias_matrix)[9:10]){
+      ggplot(bias_matrix, aes(x = population_columns, y = columns, fill = population_columns)) +
+        geom_boxplot() + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount)) + 
+        geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1) 
       
       ggsave(filename =  paste(plot_save_pattern,k,"bias_matrix",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi))
     } 
