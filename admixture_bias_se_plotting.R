@@ -68,10 +68,17 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   getPalette = colorRampPalette(brewer.pal(8, "Accent"))
   
   #plot the bias_matrix and save it
+  
+  population_matrix_data <- c("population","population_continents")
+  
   for (k in k){
-  ggplot(bias_matrix, aes(x = population, y=tsne2, color=population))+ 
+    for (matrixes in data_input_matrixes){
+      for (population_columns in population_matrix_data){
+  ggplot(matrixes, aes(x = population, y=tsne2, color=population_columns))+ 
     geom_point(alpha = 0.8) + theme_bw() + ggtitle(as.character(plot_title)) + scale_color_manual(values=getPalette(colourCount))
   
-  ggsave(filename =  paste(plot_save_pattern,k,'bias_matrix',format,sep = ""), device = format ,dpi = as.numeric(dpi))
+  ggsave(filename =  paste(plot_save_pattern,k,matrixes,population_columns,format,sep = ""), device = format ,dpi = as.numeric(dpi))
+    } 
+   }
   }
 }
