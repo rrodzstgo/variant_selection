@@ -7,6 +7,7 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   require (dplyr)
   require (ggplot2)
   require(RColorBrewer)
+  require(FSA)
   
   #plot default settings
   plot_title <- ifelse(is.null(plot_title) == TRUE,"test",plot_title)
@@ -14,8 +15,12 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   dpi <-  ifelse(is.null(dpi) == TRUE,300,dpi)
   format <- ifelse(is.null(format) == TRUE,"tiff",format)
   
+  #dunn test paramete
+  fsa_method = ifelse(is.null(fsa_method) == TRUE,FALSE,"bh",fsa_method)
+  
   #load the 1000 Genomes sample information file and rename the first column as ID
   sample_info_1kg <- read.csv("1kG_labels.txt")
+  
   colnames(sample_info_1kg)[1] <- "population"
   
   #add ID column to the bias and standard error matrices
@@ -109,6 +114,27 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
       
       
       ggsave(filename =  paste(plot_save_pattern,"_",columns,"_se_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
+    } 
+  }
+  
+#kruskal wallis and dunn test analysis
+
+#bias matrix analysis
+  
+  for (columns in c(1:k)){
+    #test population differences
+    pvalue_population <- c()
+    pvalue_population <- kruskal.test(bias_matrix[,columns],bias_matrix$population)$p.value
+    if(pvalue_population < 0.05){
+      dunn_test_bias_population <- dunnTest(bias_matrix[,columns], g= bias_matrix$population)
+      dunn_test_bias_population_pvalue <- select(dunn_test_bias$res,Comparison,P.adj) %>% filter(P.adj < 0.05)
+    } 
+    #test continental differences
+    pvalue_continental <- c()
+    pvalue_continental <- kruskal.test(bias_matrix[,columns],bias_matrix$population_continents)$p.value
+    if(pvalue_continental < 0.05){
+      dunn_test_bias_continental <- dunnTest(bias_matrix[,columns], g= bias_matrix$population_continents)
+      dunn_test_bias_continental_pvalue <- select(dunn_test_bias_continental$res,Comparison,P.adj) %>% filter(P.adj < 0.05)
     } 
   }
 }
