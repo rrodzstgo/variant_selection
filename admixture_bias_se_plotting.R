@@ -16,7 +16,7 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
   format <- ifelse(is.null(format) == TRUE,"tiff",format)
   
   #dunn test paramete
-  fsa_method = ifelse(is.null(fsa_method) == TRUE,FALSE,"bh",fsa_method)
+  fsa_method = ifelse(is.null(fsa_method) == TRUE,"holm",fsa_method)
   
   #load the 1000 Genomes sample information file and rename the first column as ID
   sample_info_1kg <- read.csv("1kG_labels.txt")
@@ -126,14 +126,14 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
     pvalue_population <- c()
     pvalue_population <- kruskal.test(bias_matrix[,columns],bias_matrix$population)$p.value
     if(pvalue_population < 0.05){
-      dunn_test_bias_population <- dunnTest(bias_matrix[,columns], g= bias_matrix$population)
+      dunn_test_bias_population <- dunnTest(bias_matrix[,columns], g= bias_matrix$population, method = fsa_method)
       dunn_test_bias_population_pvalue <- select(dunn_test_bias$res,Comparison,P.adj) %>% filter(P.adj < 0.05)
     } 
     #test continental differences
     pvalue_continental <- c()
     pvalue_continental <- kruskal.test(bias_matrix[,columns],bias_matrix$population_continents)$p.value
     if(pvalue_continental < 0.05){
-      dunn_test_bias_continental <- dunnTest(bias_matrix[,columns], g= bias_matrix$population_continents)
+      dunn_test_bias_continental <- dunnTest(bias_matrix[,columns], g= bias_matrix$population_continents, method = fsa_method)
       dunn_test_bias_continental_pvalue <- select(dunn_test_bias_continental$res,Comparison,P.adj) %>% filter(P.adj < 0.05)
     } 
   }
