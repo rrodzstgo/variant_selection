@@ -1,7 +1,7 @@
 #plot the bias and standard error files output files from ADMIXTURE using the 1000 Genomes as reference
 #the bias and standard error files must be supplied
 
-admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){
+admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,fsa_method = NULL,plot_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL){
 
   #required packages
   require (dplyr)
