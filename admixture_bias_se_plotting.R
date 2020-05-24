@@ -145,4 +145,31 @@ admixture_bias_se_plotting <- function(bias_matrix,se_matrix,k,plot_title = NULL
       dunn_test_bias_continental_pvalue_results[[length(dunn_test_bias_continental_pvalue_results)+1]] <- dunn_test_bias_continental$res
     } 
   }
+  
+  #standard error matrix analysis
+  
+  pvalue_population <- c()
+  pvalue_kruskall_population <- list()
+  dunn_test_se_population_pvalue_results <- list()
+  
+  pvalue_continental <- c()
+  pvalue_kruskall_continental <- list()
+  dunn_test_se_continental_pvalue_results <- list()
+  
+  for (columns in c(1:k)){
+    #test population differences
+    pvalue_population <- kruskal.test(se_matrix[,columns],se_matrix$population)$p.value
+    pvalue_kruskall_population[[length(pvalue_kruskall_population)+1]] <- pvalue_population
+    if(pvalue_population < 0.05){
+      dunn_test_se_population <- dunnTest(se_matrix[,columns], g= se_matrix$population, method = fsa_method)
+      dunn_test_se_population_pvalue_results[[length(dunn_test_se_population_pvalue_results)+1]] <- dunn_test_se_population$res
+    } 
+    #test continental differences
+    pvalue_continental <- kruskal.test(se_matrix[,columns],se_matrix$population_continents)$p.value
+    pvalue_kruskall_continental[[length(pvalue_kruskall_continental)+1]] <- pvalue_continental
+    if(pvalue_continental < 0.05){
+      dunn_test_se_continental <- dunnTest(se_matrix[,columns], g= se_matrix$population_continents, method = fsa_method)
+      dunn_test_se_continental_pvalue_results[[length(dunn_test_se_continental_pvalue_results)+1]] <- dunn_test_se_continental$res
+    } 
+  }
 }
