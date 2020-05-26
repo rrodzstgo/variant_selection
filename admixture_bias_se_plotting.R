@@ -1,5 +1,5 @@
-#plot the bias and standard error files output files from ADMIXTURE using the 1000 Genomes as reference
-#the bias and standard error files must be supplied
+#plot the q matrix, bias, and standard error files output files from ADMIXTURE using the 1000 Genomes as reference as well as test for differences
+#the q matrix, bias, and standard error files must be supplied
 
 admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_method = NULL,plot_title = NULL,plot_save_pattern=NULL,format=NULL,dpi=NULL,preserve_latino = FALSE){
 
