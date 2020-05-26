@@ -64,6 +64,8 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   q_matrix$population_continents[q_matrix$population=="CLM"] <- 'H/L'
   q_matrix$population_continents[q_matrix$population=="PEL"] <- 'H/L'
   
+  q_matrix$population_continents <- as.factor(q_matrix$population_continents)
+  
   bias_matrix$population_continents[bias_matrix$population=="YRI"] <- 'AFR'
   bias_matrix$population_continents[bias_matrix$population=="LWK"] <- 'AFR'
   bias_matrix$population_continents[bias_matrix$population=="GWD"] <- 'AFR'
@@ -91,6 +93,8 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   bias_matrix$population_continents[bias_matrix$population=="CLM"] <- 'H/L'
   bias_matrix$population_continents[bias_matrix$population=="PEL"] <- 'H/L'
   
+  bias_matrix$population_continents <- as.factor(bias_matrix$population_continents)
+  
   se_matrix$population_continents[se_matrix$population=="YRI"] <- 'AFR'
   se_matrix$population_continents[se_matrix$population=="LWK"] <- 'AFR'
   se_matrix$population_continents[se_matrix$population=="GWD"] <- 'AFR'
@@ -117,6 +121,8 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   se_matrix$population_continents[se_matrix$population=="PUR"] <- 'H/L'
   se_matrix$population_continents[se_matrix$population=="CLM"] <- 'H/L'
   se_matrix$population_continents[se_matrix$population=="PEL"] <- 'H/L'
+  
+  se_matrix$population_continents <- as.factor(se_matrix$population_continents)
   
   
   #expand color palette to fit all the populations 
@@ -291,6 +297,9 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     q_matrix$population_latino[q_matrix$population=="CLM"] <- 'CLM'
     q_matrix$population_latino[q_matrix$population=="PEL"] <- 'PEL'
     
+    q_matrix$population_latino <- as.factor(q_matrix$population_latino)
+    
+    
     bias_matrix$population_latino[bias_matrix$population=="YRI"] <- 'AFR'
     bias_matrix$population_latino[bias_matrix$population=="LWK"] <- 'AFR'
     bias_matrix$population_latino[bias_matrix$population=="GWD"] <- 'AFR'
@@ -317,6 +326,9 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     bias_matrix$population_latino[bias_matrix$population=="PUR"] <- 'PUR'
     bias_matrix$population_latino[bias_matrix$population=="CLM"] <- 'CLM'
     bias_matrix$population_latino[bias_matrix$population=="PEL"] <- 'PEL'
+    
+    bias_matrix$population_latino <- as.factor(bias_matrix$population_latino)
+    
     
     se_matrix$population_latino[se_matrix$population=="YRI"] <- 'AFR'
     se_matrix$population_latino[se_matrix$population=="LWK"] <- 'AFR'
@@ -345,15 +357,18 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     se_matrix$population_latino[se_matrix$population=="CLM"] <- 'CLM'
     se_matrix$population_latino[se_matrix$population=="PEL"] <- 'PEL'
     
+    se_matrix$population_latino <- as.factor(se_matrix$population_latino)
+    
+    
     #plot the q matrix data and save
     
     for (columns in colnames(q_matrix)[1:k]){
       for (population_columns in colnames(q_matrix)[9:10]){
         ggplot(q_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(columns), color = "red", size=1) 
+          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(columns), color = "red", size=1) 
         
         
-        ggsave(filename =  paste(plot_save_pattern,"_",columns,"_q_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
+        ggsave(filename =  paste(plot_save_pattern,"_",columns,"_q_matrix_latino","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
       } 
     }
     
@@ -362,10 +377,10 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     for (columns in colnames(bias_matrix)[1:k]){
       for (population_columns in colnames(bias_matrix)[9:10]){
         ggplot(bias_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1)
+          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1)
         geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1) 
         
-        ggsave(filename =  paste(plot_save_pattern,"_",columns,"_bias_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi),width = 12)
+        ggsave(filename =  paste(plot_save_pattern,"_",columns,"_bias_matrix_latino","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi),width = 12)
       } 
     }
     
@@ -374,33 +389,22 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     for (columns in colnames(se_matrix)[1:k]){
       for (population_columns in colnames(se_matrix)[9:10]){
         ggplot(se_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(columns), color = "red", size=1) 
+          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(columns), color = "red", size=1) 
         
         
-        ggsave(filename =  paste(plot_save_pattern,"_",columns,"_se_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
+        ggsave(filename =  paste(plot_save_pattern,"_",columns,"_se_matrix_latino","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
       } 
     }
     
     #kruskal wallis and dunn test analysis
     
-    #q matrix analysis
-    
-    pvalue_population <- c()
-    pvalue_kruskall_population <- list()
-    dunn_test_se_population_pvalue_results <- list()
+    #q matrix analysis latino
     
     pvalue_latino <- c()
     pvalue_kruskall_latino <- list()
     dunn_test_se_latino_pvalue_results <- list()
     
     for (columns in c(1:k)){
-      #test population differences
-      pvalue_population <- kruskal.test(q_matrix[,columns],q_matrix$population)$p.value
-      pvalue_kruskall_population[[length(pvalue_kruskall_population)+1]] <- pvalue_population
-      if(pvalue_population < 0.05){
-        dunn_test_se_population <- dunnTest(q_matrix[,columns], g= q_matrix$population, method = fsa_method)
-        dunn_test_se_population_pvalue_results[[length(dunn_test_se_population_pvalue_results)+1]] <- dunn_test_se_population$res
-      } 
       #test latino differences
       pvalue_latino <- kruskal.test(q_matrix[,columns],q_matrix$population_latino)$p.value
       pvalue_kruskall_latino[[length(pvalue_kruskall_latino)+1]] <- pvalue_latino
@@ -414,24 +418,13 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
       
     }
     
-    #bias matrix analysis
-    
-    pvalue_population <- c()
-    pvalue_kruskall_population <- list()
-    dunn_test_bias_population_pvalue_results <- list()
+    #bias matrix analysis latino
     
     pvalue_latino <- c()
     pvalue_kruskall_latino <- list()
     dunn_test_bias_latino_pvalue_results <- list()
     
     for (columns in c(1:k)){
-      #test population differences
-      pvalue_population <- kruskal.test(bias_matrix[,columns],bias_matrix$population)$p.value
-      pvalue_kruskall_population[[length(pvalue_kruskall_population)+1]] <- pvalue_population
-      if(pvalue_population < 0.05){
-        dunn_test_bias_population <- dunnTest(bias_matrix[,columns], g= bias_matrix$population, method = fsa_method)
-        dunn_test_bias_population_pvalue_results[[length(dunn_test_bias_population_pvalue_results)+1]] <- dunn_test_bias_population$res
-      } 
       #test latino differences
       pvalue_latino <- kruskal.test(bias_matrix[,columns],bias_matrix$population_latino)$p.value
       pvalue_kruskall_latino[[length(pvalue_kruskall_latino)+1]] <- pvalue_latino
@@ -443,24 +436,13 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
       write.csv(dunn_test_bias_latino_pvalue_results, file = paste(plot_save_pattern,"_bias_dunn_pop_latino.csv"))
     }
     
-    #standard error matrix analysis
-    
-    pvalue_population <- c()
-    pvalue_kruskall_population <- list()
-    dunn_test_se_population_pvalue_results <- list()
+    #standard error matrix analysis latino
     
     pvalue_latino <- c()
     pvalue_kruskall_latino <- list()
     dunn_test_se_latino_pvalue_results <- list()
     
     for (columns in c(1:k)){
-      #test population differences
-      pvalue_population <- kruskal.test(se_matrix[,columns],se_matrix$population)$p.value
-      pvalue_kruskall_population[[length(pvalue_kruskall_population)+1]] <- pvalue_population
-      if(pvalue_population < 0.05){
-        dunn_test_se_population <- dunnTest(se_matrix[,columns], g= se_matrix$population, method = fsa_method)
-        dunn_test_se_population_pvalue_results[[length(dunn_test_se_population_pvalue_results)+1]] <- dunn_test_se_population$res
-      } 
       #test latino differences
       pvalue_latino <- kruskal.test(se_matrix[,columns],se_matrix$population_latino)$p.value
       pvalue_kruskall_latino[[length(pvalue_kruskall_latino)+1]] <- pvalue_latino
@@ -468,8 +450,8 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
         dunn_test_se_latino <- dunnTest(se_matrix[,columns], g= se_matrix$population_latino, method = fsa_method)
         dunn_test_se_latino_pvalue_results[[length(dunn_test_se_latino_pvalue_results)+1]] <- dunn_test_se_latino$res
       }
-      write.csv(pvalue_kruskall_latino, file = paste(plot_save_pattern,"_se_kruskal_cont_pop.csv",sep = ""))
-      write.csv(dunn_test_se_latino_pvalue_results, file = paste(plot_save_pattern,"_se_dunn_pop_cont.csv",sep = ""))
+      write.csv(pvalue_kruskall_latino, file = paste(plot_save_pattern,"_se_kruskal_cont_pop_latino.csv",sep = ""))
+      write.csv(dunn_test_se_latino_pvalue_results, file = paste(plot_save_pattern,"_se_dunn_pop_cont_latino.csv",sep = ""))
     }
     
   }
