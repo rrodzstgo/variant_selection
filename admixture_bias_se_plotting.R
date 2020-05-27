@@ -64,8 +64,6 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   q_matrix$population_continents[q_matrix$population=="CLM"] <- 'H/L'
   q_matrix$population_continents[q_matrix$population=="PEL"] <- 'H/L'
   
-  q_matrix$population_continents <- as.factor(q_matrix$population_continents)
-  
   bias_matrix$population_continents[bias_matrix$population=="YRI"] <- 'AFR'
   bias_matrix$population_continents[bias_matrix$population=="LWK"] <- 'AFR'
   bias_matrix$population_continents[bias_matrix$population=="GWD"] <- 'AFR'
@@ -93,7 +91,6 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   bias_matrix$population_continents[bias_matrix$population=="CLM"] <- 'H/L'
   bias_matrix$population_continents[bias_matrix$population=="PEL"] <- 'H/L'
   
-  bias_matrix$population_continents <- as.factor(bias_matrix$population_continents)
   
   se_matrix$population_continents[se_matrix$population=="YRI"] <- 'AFR'
   se_matrix$population_continents[se_matrix$population=="LWK"] <- 'AFR'
@@ -121,9 +118,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   se_matrix$population_continents[se_matrix$population=="PUR"] <- 'H/L'
   se_matrix$population_continents[se_matrix$population=="CLM"] <- 'H/L'
   se_matrix$population_continents[se_matrix$population=="PEL"] <- 'H/L'
-  
-  se_matrix$population_continents <- as.factor(se_matrix$population_continents)
-  
+
   
   #expand color palette to fit all the populations 
   colourCount <- length(unique(bias_matrix$population))
@@ -351,33 +346,30 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     se_matrix$population_latino[se_matrix$population=="CLM"] <- 'CLM'
     se_matrix$population_latino[se_matrix$population=="PEL"] <- 'PEL'
     
+    
     #set order and factor of population
     population_latino_legend <- c("AFR","AA","EUR","SAS","EAS","MXL","PUR","CLM","PEL")
-   
-    q_matrix$population_latino <- as.factor(q_matrix$population_latino)
-    bias_matrix$population_latino <- as.factor(bias_matrix$population_latino)
-    se_matrix$population_latino <- as.factor(se_matrix$population_latino)
     
-    q_matrix$population_latino <- factor(q_matrix$population, levels = population_legend)
-    bias_matrix$population_latino <- factor(bias_matrix$population, levels = population_legend)
-    se_matrix$population_latino <- factor(se_matrix$population, levels = population_legend)
+    q_matrix$population_latino <- factor(q_matrix$population_latino, levels = population_latino_legend)
+    bias_matrix$population_latino <- factor(bias_matrix$population_latino, levels = population_latino_legend)
+    se_matrix$population_latino <- factor(se_matrix$population_latino, levels = population_latino_legend)
     
     #plot the q matrix data and save
     
     for (columns in colnames(q_matrix)[1:k]){
       for (population_columns in colnames(q_matrix)[11]){
         ggplot(q_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(columns), color = "red", size=1) 
+          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(as.numeric(columns)), color = "red", size=1) 
         
         
-        ggsave(filename =  paste(plot_save_pattern,"_",columns,"_q_matrix_latino","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
+        ggsave(filename =  paste(plot_save_pattern,"_",columns,"_q_matrix_latino_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
       } 
     }
     
     #plot the bias_matrix and save
     
     for (columns in colnames(bias_matrix)[1:k]){
-      for (population_columns in colnames(bias_matrix)[11]){
+      for (population_columns in colnames(bias_matrix)[10]){
         ggplot(bias_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
           geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1)
         geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1) 
