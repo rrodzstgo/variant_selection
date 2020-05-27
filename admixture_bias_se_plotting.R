@@ -190,8 +190,8 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     }
     write.csv(pvalue_kruskall_population, file = paste(plot_save_pattern,"_qmatrix_kruskal_pop.csv",sep = ""))
     write.csv(pvalue_kruskall_continental, file = paste(plot_save_pattern,"_qmatrix_kruskal_pop.csv",sep = ""))
-    write.csv(dunn_test_se_population_pvalue_results, file = paste(plot_save_pattern,"_qmatrix_kruskal_pop.csv",sep = ""))
-    write.csv(dunn_test_se_continental_pvalue_results, file = paste(plot_save_pattern,"_qmatrix_kruskal_pop.csv",sep = ""))
+    write.csv(dunn_test_se_population_pvalue_results, file = paste(plot_save_pattern,"_qmatrix_dunn_pop.csv",sep = ""))
+    write.csv(dunn_test_se_continental_pvalue_results, file = paste(plot_save_pattern,"_qmatrix_dunn_pop.csv",sep = ""))
     
     
   }
@@ -221,10 +221,10 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
       dunn_test_bias_continental <- dunnTest(bias_matrix[,columns], g= bias_matrix$population_continents, method = fsa_method)
       dunn_test_bias_continental_pvalue_results[[length(dunn_test_bias_continental_pvalue_results)+1]] <- dunn_test_bias_continental$res
     }
-    write.csv(pvalue_kruskall_population, file = paste(plot_save_pattern,"_bias_kruskal_pop.csv"))
-    write.csv(pvalue_kruskall_continental, file = paste(plot_save_pattern,"_bias_kruskal_cont_pop.csv"))
-    write.csv(dunn_test_bias_population_pvalue_results, file = paste(plot_save_pattern,"_bias_dunn_pop.csv"))
-    write.csv(dunn_test_bias_continental_pvalue_results, file = paste(plot_save_pattern,"_bias_dunn_pop_cont.csv"))
+    write.csv(pvalue_kruskall_population, file = paste(plot_save_pattern,"_bias_kruskal_pop.csv",sep = ""))
+    write.csv(pvalue_kruskall_continental, file = paste(plot_save_pattern,"_bias_kruskal_cont_pop.csv",sep = ""))
+    write.csv(dunn_test_bias_population_pvalue_results, file = paste(plot_save_pattern,"_bias_dunn_pop.csv",sep = ""))
+    write.csv(dunn_test_bias_continental_pvalue_results, file = paste(plot_save_pattern,"_bias_dunn_pop_cont.csv",sep = ""))
   }
   
   #standard error matrix analysis
@@ -407,7 +407,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
         dunn_test_se_latino_pvalue_results[[length(dunn_test_se_latino_pvalue_results)+1]] <- dunn_test_se_latino$res
       }
       write.csv(pvalue_kruskall_latino, file = paste(plot_save_pattern,"_qmatrix_kruskal_latino.csv",sep = ""))
-      write.csv(dunn_test_se_latino_pvalue_results, file = paste(plot_save_pattern,"_qmatrix_kruskal_latino.csv",sep = ""))
+      write.csv(dunn_test_se_latino_pvalue_results, file = paste(plot_save_pattern,"_qmatrix_dunn_latino.csv",sep = ""))
       
       
     }
@@ -426,8 +426,8 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
         dunn_test_bias_latino <- dunnTest(bias_matrix[,columns], g= bias_matrix$population_latino, method = fsa_method)
         dunn_test_bias_latino_pvalue_results[[length(dunn_test_bias_latino_pvalue_results)+1]] <- dunn_test_bias_latino$res
       }
-      write.csv(pvalue_kruskall_latino, file = paste(plot_save_pattern,"_bias_kruskal_cont_latino.csv"))
-      write.csv(dunn_test_bias_latino_pvalue_results, file = paste(plot_save_pattern,"_bias_dunn_pop_latino.csv"))
+      write.csv(pvalue_kruskall_latino, file = paste(plot_save_pattern,"_bias_kruskal_cont_latino.csv",sep = ""))
+      write.csv(dunn_test_bias_latino_pvalue_results, file = paste(plot_save_pattern,"_bias_dunn_pop_latino.csv",sep = ""))
     }
     
     #standard error matrix analysis latino
