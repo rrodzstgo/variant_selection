@@ -175,14 +175,14 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   
   for (columns in c(1:k)){
     #test population differences
-    pvalue_population <- kruskal.test(q_matrix[,columns],q_matrix$population)$p.value
+    pvalue_population <- kruskal.test(q_matrix[,columns],as.factor(q_matrix$population))$p.value
     pvalue_kruskall_population[[length(pvalue_kruskall_population)+1]] <- pvalue_population
     if(pvalue_population < 0.05){
       dunn_test_se_population <- dunnTest(q_matrix[,columns], g= q_matrix$population, method = fsa_method)
       dunn_test_se_population_pvalue_results[[length(dunn_test_se_population_pvalue_results)+1]] <- dunn_test_se_population$res
     } 
     #test continental differences
-    pvalue_continental <- kruskal.test(q_matrix[,columns],q_matrix$population_continents)$p.value
+    pvalue_continental <- kruskal.test(q_matrix[,columns],as.factor(q_matrix$population_continents))$p.value
     pvalue_kruskall_continental[[length(pvalue_kruskall_continental)+1]] <- pvalue_continental
     if(pvalue_continental < 0.05){
       dunn_test_se_continental <- dunnTest(q_matrix[,columns], g= q_matrix$population_continents, method = fsa_method)
@@ -208,14 +208,14 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   
   for (columns in c(1:k)){
     #test population differences
-    pvalue_population <- kruskal.test(bias_matrix[,columns],bias_matrix$population)$p.value
+    pvalue_population <- kruskal.test(bias_matrix[,columns],as.factor(bias_matrix$population))$p.value
     pvalue_kruskall_population[[length(pvalue_kruskall_population)+1]] <- pvalue_population
     if(pvalue_population < 0.05){
       dunn_test_bias_population <- dunnTest(bias_matrix[,columns], g= bias_matrix$population, method = fsa_method)
       dunn_test_bias_population_pvalue_results[[length(dunn_test_bias_population_pvalue_results)+1]] <- dunn_test_bias_population$res
     } 
     #test continental differences
-    pvalue_continental <- kruskal.test(bias_matrix[,columns],bias_matrix$population_continents)$p.value
+    pvalue_continental <- kruskal.test(bias_matrix[,columns],as.factor(bias_matrix$population_continents))$p.value
     pvalue_kruskall_continental[[length(pvalue_kruskall_continental)+1]] <- pvalue_continental
     if(pvalue_continental < 0.05){
       dunn_test_bias_continental <- dunnTest(bias_matrix[,columns], g= bias_matrix$population_continents, method = fsa_method)
@@ -239,14 +239,14 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   
   for (columns in c(1:k)){
     #test population differences
-    pvalue_population <- kruskal.test(se_matrix[,columns],se_matrix$population)$p.value
+    pvalue_population <- kruskal.test(se_matrix[,columns],as.factor(se_matrix$population))$p.value
     pvalue_kruskall_population[[length(pvalue_kruskall_population)+1]] <- pvalue_population
     if(pvalue_population < 0.05){
       dunn_test_se_population <- dunnTest(se_matrix[,columns], g= se_matrix$population, method = fsa_method)
       dunn_test_se_population_pvalue_results[[length(dunn_test_se_population_pvalue_results)+1]] <- dunn_test_se_population$res
     } 
     #test continental differences
-    pvalue_continental <- kruskal.test(se_matrix[,columns],se_matrix$population_continents)$p.value
+    pvalue_continental <- kruskal.test(se_matrix[,columns],as.factor(se_matrix$population_continents))$p.value
     pvalue_kruskall_continental[[length(pvalue_kruskall_continental)+1]] <- pvalue_continental
     if(pvalue_continental < 0.05){
       dunn_test_se_continental <- dunnTest(se_matrix[,columns], g= se_matrix$population_continents, method = fsa_method)
@@ -400,7 +400,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     
     for (columns in c(1:k)){
       #test latino differences
-      pvalue_latino <- kruskal.test(q_matrix[,columns],q_matrix$population_latino)$p.value
+      pvalue_latino <- kruskal.test(q_matrix[,columns],as.factor(q_matrix$population_latino))$p.value
       pvalue_kruskall_latino[[length(pvalue_kruskall_latino)+1]] <- pvalue_latino
       if(pvalue_latino < 0.05){
         dunn_test_se_latino <- dunnTest(q_matrix[,columns], g= q_matrix$population_latino, method = fsa_method)
@@ -420,7 +420,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     
     for (columns in c(1:k)){
       #test latino differences
-      pvalue_latino <- kruskal.test(bias_matrix[,columns],bias_matrix$population_latino)$p.value
+      pvalue_latino <- kruskal.test(bias_matrix[,columns],as.factor(bias_matrix$population_latino))$p.value
       pvalue_kruskall_latino[[length(pvalue_kruskall_latino)+1]] <- pvalue_latino
       if(pvalue_latino < 0.05){
         dunn_test_bias_latino <- dunnTest(bias_matrix[,columns], g= bias_matrix$population_latino, method = fsa_method)
@@ -438,7 +438,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     
     for (columns in c(1:k)){
       #test latino differences
-      pvalue_latino <- kruskal.test(se_matrix[,columns],se_matrix$population_latino)$p.value
+      pvalue_latino <- kruskal.test(se_matrix[,columns],as.factor(se_matrix$population_latino))$p.value
       pvalue_kruskall_latino[[length(pvalue_kruskall_latino)+1]] <- pvalue_latino
       if(pvalue_latino < 0.05){
         dunn_test_se_latino <- dunnTest(se_matrix[,columns], g= se_matrix$population_latino, method = fsa_method)
