@@ -359,7 +359,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     for (columns in colnames(q_matrix)[1:k]){
       for (population_columns in colnames(q_matrix)[11]){
         ggplot(q_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(as.numeric(columns)), color = "red", size=1) 
+          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Q Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=mean(as.numeric(columns)), color = "red", size=1) 
         
         
         ggsave(filename =  paste(plot_save_pattern,"_",columns,"_q_matrix_latino_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
