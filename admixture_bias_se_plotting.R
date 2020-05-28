@@ -369,7 +369,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     #plot the bias_matrix and save
     
     for (columns in colnames(bias_matrix)[1:k]){
-      for (population_columns in colnames(bias_matrix)[10]){
+      for (population_columns in colnames(bias_matrix)[11]){
         ggplot(bias_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
           geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1)
         geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1) 
