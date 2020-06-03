@@ -130,7 +130,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   for (columns in colnames(q_matrix)[1:k]){
     for (population_columns in colnames(q_matrix)[9:10]){
       ggplot(q_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-        geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Q Matrix Plot"))) + scale_color_manual(values=getPalette(colourCount)) 
+        geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Q Matrix Plot"))) + scale_color_manual(values=getPalette(colourCount)) + ylim(0,1) + theme(text=element_size(size = 20))
       
       
       ggsave(filename =  paste(plot_save_pattern,"_",columns,"_q_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
@@ -142,7 +142,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   for (columns in colnames(bias_matrix)[1:k]){
     for (population_columns in colnames(bias_matrix)[9:10]){
       ggplot(bias_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-        geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot"))) + scale_color_manual(values=getPalette(colourCount)) 
+        geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot"))) + scale_color_manual(values=getPalette(colourCount)) + ylim(-0.18,0.18) + theme(text=element_size(size = 20))
       
       ggsave(filename =  paste(plot_save_pattern,"_",columns,"_bias_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi),width = 12)
     } 
@@ -153,7 +153,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
   for (columns in colnames(se_matrix)[1:k]){
     for (population_columns in colnames(se_matrix)[9:10]){
       ggplot(se_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-        geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot"))) + scale_color_manual(values=getPalette(colourCount))  
+        geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot"))) + scale_color_manual(values=getPalette(colourCount)) + ylim(0,0.25) + theme(text=element_size(size = 20))
       
       
       ggsave(filename =  paste(plot_save_pattern,"_",columns,"_se_matrix","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
@@ -358,7 +358,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     for (columns in colnames(q_matrix)[1:k]){
       for (population_columns in colnames(q_matrix)[11]){
         ggplot(q_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Q Matrix Latino"))) + scale_color_manual(values=getPalette(colourCount)) 
+          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Q Matrix Latino"))) + scale_color_manual(values=getPalette(colourCount)) + ylim(0,1) + theme(text=element_size(size = 20))
         
         
         ggsave(filename =  paste(plot_save_pattern,"_",columns,"_q_matrix_latino_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
@@ -370,7 +370,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     for (columns in colnames(bias_matrix)[1:k]){
       for (population_columns in colnames(bias_matrix)[11]){
         ggplot(bias_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) 
+          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title, "Boostrap Bias Plot Latino"))) + scale_color_manual(values=getPalette(colourCount)) + ylim(-0.18,0.18) + theme(text=element_size(size = 20))
         geom_hline(yintercept=median(bias_matrix$columns), color = "red", size=1) 
         
         ggsave(filename =  paste(plot_save_pattern,"_",columns,"_bias_matrix_latino","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi),width = 12)
@@ -382,7 +382,7 @@ admixture_q_bias_se_plotting <- function(q_matrix,bias_matrix,se_matrix,k,fsa_me
     for (columns in colnames(se_matrix)[1:k]){
       for (population_columns in colnames(se_matrix)[11]){
         ggplot(se_matrix, aes_string(x = population_columns, y = columns, fill = population_columns)) +
-          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot Latino"))) + scale_color_manual(values=getPalette(colourCount))  
+          geom_boxplot() + theme_bw() + ggtitle(as.character(paste(plot_title,"Bootstrap Standard Error Plot Latino"))) + scale_color_manual(values=getPalette(colourCount))  + ylim(0,0.25) + theme(text=element_size(size = 20))
         
         
         ggsave(filename =  paste(plot_save_pattern,"_",columns,"_se_matrix_latino","_",population_columns,".",format,sep = ""), device = format ,dpi = as.numeric(dpi), width = 12)
