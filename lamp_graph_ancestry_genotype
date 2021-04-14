@@ -1,0 +1,17 @@
+mega_50_call <- paste(as.factor(mega_lamp_50$X159195043), as.factor(mega_lamp_50$X159205095))
+mega_50_call <- recode(mega_50_call,"0 0"="0","1 1"="1","2 2"="2","0 1"="mxd","0 2"="mxd","1 0"="mxd","1 2"="mxd","2 0"="mxd","2 1"="mxd")
+mega_lamp_50_anc <- data.frame(as.factor(hl_samples_duffy_long$sample_names),as.factor(hl_samples_duffy_long$sample_genotypes),mega_50_call)
+colnames(mega_lamp_50_anc) <- c("sample","genotypes","ancestry_call")
+summary(mega_lamp_50_anc)
+mixed_samples <- as.vector(unique(filter(mega_lamp_50_anc,ancestry_call=="mxd")$sample))
+mega_lamp_50_anc_flt <- mega_lamp_50_anc[mega_lamp_50_anc$sample != mixed_samples, ]
+even_indices <- seq(2,nrow(mega_lamp_50_anc),2)
+odd_indices <- seq(1,nrow(mega_lamp_50_anc),2)
+mega_lamp_50_anc[even_indices,]
+mega_lamp_50_anc[odd_indices,]
+mega_lamp_50_anc_flt_call <- data.frame(mega_lamp_50_anc[odd_indices,]$sample,mega_lamp_50_anc[odd_indices,]$genotypes,paste(mega_lamp_50_anc[odd_indices,]$ancestry_call,mega_lamp_50_anc[even_indices,]$ancestry_call))
+colnames(mega_lamp_50_anc_flt_call) <- c("sample","genotype","ancestry_call")
+mega_lamp_50_anc_flt_call <- filter(mega_lamp_50_anc_flt_call,!grepl("mxd",ancestry_call))
+mega_lamp_50_anc_flt_call_meta <- left_join(mega_lamp_50_anc_flt_call,hl_samples_meta, by=c("sample"="Samples"))
+mega_lamp_50_anc_flt_call_meta$pop_call <- paste(mega_lamp_50_anc_flt_call_meta$genotype,mega_lamp_50_anc_flt_call_meta$population)
+ggplot(mega_lamp_50_anc_flt_call_meta) + geom_bar(aes(x=ancestry_call, color=genotype,fill=population),stat="count") + labs(title = "MEGA 50 SNP Window Ancestry Call", y="Ancestry Call", x="Ancestry Call", fill="Genotypes")
